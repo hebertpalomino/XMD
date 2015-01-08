@@ -13,20 +13,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 
-public class LoginFragment extends Fragment {
+public class SignupFragment extends Fragment {
 
-    public final String TAG = "~~~ spdebug";
-    public Button mLoginButton;
     public EditText mUsername;
     public EditText mPassword;
+    public Button mSignup;
     public SharedPreferences prefs;
+    public final String TAG = "~~~ Debug: ";
 
-    public LoginFragment() {
+    public SignupFragment() {
         // Required empty public constructor
     }
 
@@ -34,42 +34,49 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_login, container, false);
+        View v = inflater.inflate(R.layout.fragment_signup, container, false);
 
         prefs = getActivity().getSharedPreferences("com.stevenpalomino.accountably", Context.MODE_PRIVATE);
-        mLoginButton = (Button)v.findViewById(R.id.loginButton);
-        mUsername = (EditText)v.findViewById(R.id.expenseName);
-        mPassword = (EditText)v.findViewById(R.id.passwordField);
 
-        mLoginButton.setOnClickListener(new View.OnClickListener() {
+        mUsername = (EditText)v.findViewById(R.id.expenseName);
+        mPassword = (EditText)v.findViewById(R.id.SpasswordField);
+        mSignup = (Button)v.findViewById(R.id.SsignupButton);
+
+
+
+        mSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "username: " + mUsername.getText().toString());
-
-            if ((!mUsername.getText().toString().equals("")) && (!mPassword.getText().toString().equals("")))
-                {
-                    ParseUser.logInInBackground(mUsername.getText().toString(), mPassword.getText().toString(), new LogInCallback() {
+                if ((!mUsername.getText().toString().equals("")) && (!mPassword.getText().toString().equals(""))) {
+                    ParseUser sUser = new ParseUser();
+                    sUser.setUsername(mUsername.getText().toString());
+                    sUser.setPassword(mPassword.getText().toString());
+                    sUser.signUpInBackground(new SignUpCallback() {
                         @Override
-                        public void done(ParseUser parseUser, ParseException e) {
-                            if (parseUser != null) {
+                        public void done(ParseException e) {
+                            if (e == null) {
+                                // Sign Up Successful, push main member's area
+                                //Callback success to main view and push members area
                                 prefs.edit().putString("user", mUsername.getText().toString()).apply();
                                 prefs.edit().putString("pass", mPassword.getText().toString()).apply();
                                 prefs.edit().putBoolean("signedIn", true).apply();
                                 getActivity().finish();
                                 Log.d(TAG, "success");
-                            }else{
+
+                            } else {
                                 Toast.makeText(getActivity(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                                 e.printStackTrace();
                             }
                         }
                     });
                 }else{
-                Toast.makeText(getActivity(), "Username or Password cannot be empty", Toast.LENGTH_SHORT).show();
-            }
+                    Toast.makeText(getActivity(), "Username or Password cannot be empty", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
 
+        // Inflate the layout for this fragment
         return v;
     }
 

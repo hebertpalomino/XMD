@@ -5,28 +5,23 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.parse.Parse;
 
-
-public class MainActivity extends ActionBarActivity {
+public class SignupActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_signup);
 
-        Parse.enableLocalDatastore(this);
-        Parse.initialize(this, "Tp7eC66zJGYEoV2o2w5sf5uzuazYg1MgnKmxUx7z", "oWYycuBamJR6spbdmHab6Fe0QQtZThmnKcWwQBTp");
-
-        MainFragment mFrag = new MainFragment();
-        getFragmentManager().beginTransaction().replace(R.id.mainContainer, mFrag).commit();
+        SignupFragment sFrag = new SignupFragment();
+        getFragmentManager().beginTransaction().replace(R.id.signupContainer, sFrag).commit();
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_signup, menu);
         return true;
     }
 

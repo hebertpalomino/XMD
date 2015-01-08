@@ -12,13 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.parse.Parse;
-
 
 public class MainFragment extends Fragment {
 
 
     public Button loginBtn;
+    public Button signupBtn;
     public SharedPreferences prefs;
     public MainFragment() {
         // Required empty public constructor
@@ -46,10 +45,18 @@ public class MainFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_main, container, false);
         // Enable Local Datastore.
 
-        Parse.enableLocalDatastore(getActivity());
-        Parse.initialize(getActivity(), "Tp7eC66zJGYEoV2o2w5sf5uzuazYg1MgnKmxUx7z", "oWYycuBamJR6spbdmHab6Fe0QQtZThmnKcWwQBTp");
+
 
         loginBtn = (Button)v.findViewById(R.id.loginButton);
+        signupBtn = (Button)v.findViewById(R.id.SsignupButton);
+
+        signupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent signupIntent = new Intent(getActivity(), SignupActivity.class);
+                getActivity().startActivity(signupIntent);
+            }
+        });
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override

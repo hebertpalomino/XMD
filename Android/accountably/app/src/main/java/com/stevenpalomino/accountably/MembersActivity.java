@@ -1,6 +1,7 @@
 package com.stevenpalomino.accountably;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -45,6 +46,11 @@ public class MembersActivity extends ActionBarActivity {
             ParseUser.logOut();
             prefs.edit().putBoolean("signedIn", false).apply();
             finish();
+            return true;
+        }else if (id == R.id.action_add){
+
+            Intent addIntent = new Intent(this, AddActivity.class);
+            startActivity(addIntent);
             return true;
         }
 
