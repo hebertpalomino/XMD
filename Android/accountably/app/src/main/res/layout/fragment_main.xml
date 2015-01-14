@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.stevenpalomino.accountably.MainFragment"
-    android:background="#ff2886d7">
+    android:background="#ff2886d7"
+    android:focusable="true">
 
 
     <TextView
