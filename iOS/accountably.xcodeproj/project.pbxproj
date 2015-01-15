@@ -16,8 +16,6 @@
 		B03F46231A649D3700963343 /* accountablyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B03F46221A649D3700963343 /* accountablyTests.m */; };
 		B03F462E1A64A92500963343 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B03F462D1A64A92500963343 /* LoginViewController.m */; };
 		B03F46311A64A92F00963343 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B03F46301A64A92F00963343 /* SignUpViewController.m */; };
-		B03F46351A64AE2200963343 /* ExpenseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B03F46331A64AE2200963343 /* ExpenseCell.m */; };
-		B03F46361A64AE2200963343 /* ExpenseCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B03F46341A64AE2200963343 /* ExpenseCell.xib */; };
 		B03F46391A64AF1F00963343 /* ExpensesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B03F46381A64AF1F00963343 /* ExpensesTableViewController.m */; };
 		B0A1EF951A65E4AA0081D14B /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A1EF931A65E4AA0081D14B /* Bolts.framework */; };
 		B0A1EF961A65E4AA0081D14B /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A1EF941A65E4AA0081D14B /* Parse.framework */; };
@@ -32,6 +30,8 @@
 		B0A1EFA81A65E50C0081D14B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A1EFA71A65E50C0081D14B /* SystemConfiguration.framework */; };
 		B0A1EFAA1A65E5140081D14B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A1EFA91A65E5140081D14B /* libz.dylib */; };
 		B0A1EFAC1A65E51D0081D14B /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B0A1EFAB1A65E51D0081D14B /* libsqlite3.dylib */; };
+		B0FB6EF61A673AEA00A2904A /* ExpensesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FB6EF51A673AEA00A2904A /* ExpensesTableViewCell.m */; };
+		B0FB6EF91A674CDC00A2904A /* AddExpenseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FB6EF81A674CDC00A2904A /* AddExpenseViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,9 +62,6 @@
 		B03F462D1A64A92500963343 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		B03F462F1A64A92F00963343 /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
 		B03F46301A64A92F00963343 /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
-		B03F46321A64AE2200963343 /* ExpenseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpenseCell.h; sourceTree = "<group>"; };
-		B03F46331A64AE2200963343 /* ExpenseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpenseCell.m; sourceTree = "<group>"; };
-		B03F46341A64AE2200963343 /* ExpenseCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExpenseCell.xib; sourceTree = "<group>"; };
 		B03F46371A64AF1F00963343 /* ExpensesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExpensesTableViewController.h; sourceTree = "<group>"; };
 		B03F46381A64AF1F00963343 /* ExpensesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExpensesTableViewController.m; sourceTree = "<group>"; };
 		B0A1EF931A65E4AA0081D14B /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
@@ -80,6 +77,10 @@
 		B0A1EFA71A65E50C0081D14B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		B0A1EFA91A65E5140081D14B /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		B0A1EFAB1A65E51D0081D14B /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		B0FB6EF41A673AEA00A2904A /* ExpensesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExpensesTableViewCell.h; path = ../ExpensesTableViewCell.h; sourceTree = "<group>"; };
+		B0FB6EF51A673AEA00A2904A /* ExpensesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExpensesTableViewCell.m; path = ../ExpensesTableViewCell.m; sourceTree = "<group>"; };
+		B0FB6EF71A674CDC00A2904A /* AddExpenseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddExpenseViewController.h; sourceTree = "<group>"; };
+		B0FB6EF81A674CDC00A2904A /* AddExpenseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddExpenseViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +117,8 @@
 		B03F45FA1A649D3700963343 = {
 			isa = PBXGroup;
 			children = (
+				B0FB6EF71A674CDC00A2904A /* AddExpenseViewController.h */,
+				B0FB6EF81A674CDC00A2904A /* AddExpenseViewController.m */,
 				B0A1EF921A65E49D0081D14B /* Frameworks */,
 				B03F46051A649D3700963343 /* accountably */,
 				B03F461F1A649D3700963343 /* accountablyTests */,
@@ -142,9 +145,8 @@
 				B03F46101A649D3700963343 /* Main.storyboard */,
 				B03F46371A64AF1F00963343 /* ExpensesTableViewController.h */,
 				B03F46381A64AF1F00963343 /* ExpensesTableViewController.m */,
-				B03F46341A64AE2200963343 /* ExpenseCell.xib */,
-				B03F46321A64AE2200963343 /* ExpenseCell.h */,
-				B03F46331A64AE2200963343 /* ExpenseCell.m */,
+				B0FB6EF41A673AEA00A2904A /* ExpensesTableViewCell.h */,
+				B0FB6EF51A673AEA00A2904A /* ExpensesTableViewCell.m */,
 				B03F462C1A64A92500963343 /* LoginViewController.h */,
 				B03F462D1A64A92500963343 /* LoginViewController.m */,
 				B03F462F1A64A92F00963343 /* SignUpViewController.h */,
@@ -282,7 +284,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B03F46361A64AE2200963343 /* ExpenseCell.xib in Resources */,
 				B03F46121A649D3700963343 /* Main.storyboard in Resources */,
 				B03F46171A649D3700963343 /* LaunchScreen.xib in Resources */,
 				B03F46141A649D3700963343 /* Images.xcassets in Resources */,
@@ -303,11 +304,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B03F46351A64AE2200963343 /* ExpenseCell.m in Sources */,
+				B0FB6EF61A673AEA00A2904A /* ExpensesTableViewCell.m in Sources */,
 				B03F462E1A64A92500963343 /* LoginViewController.m in Sources */,
 				B03F46311A64A92F00963343 /* SignUpViewController.m in Sources */,
 				B03F460F1A649D3700963343 /* ViewController.m in Sources */,
 				B03F460C1A649D3700963343 /* AppDelegate.m in Sources */,
+				B0FB6EF91A674CDC00A2904A /* AddExpenseViewController.m in Sources */,
 				B03F46391A64AF1F00963343 /* ExpensesTableViewController.m in Sources */,
 				B03F46091A649D3700963343 /* main.m in Sources */,
 			);
