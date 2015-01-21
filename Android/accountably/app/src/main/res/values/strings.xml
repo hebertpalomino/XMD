@@ -9,5 +9,6 @@
     <string name="title_activity_members">MembersActivity</string>
     <string name="title_activity_signup">SignupActivity</string>
     <string name="title_activity_add">AddActivity</string>
+    <string name="title_activity_update">updateActivity</string>
 
 </resources>
