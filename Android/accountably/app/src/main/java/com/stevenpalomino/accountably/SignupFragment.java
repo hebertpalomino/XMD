@@ -38,7 +38,7 @@ public class SignupFragment extends Fragment {
 
         prefs = getActivity().getSharedPreferences("com.stevenpalomino.accountably", Context.MODE_PRIVATE);
 
-        mUsername = (EditText)v.findViewById(R.id.expenseName);
+        mUsername = (EditText)v.findViewById(R.id.updateName);
         mPassword = (EditText)v.findViewById(R.id.SpasswordField);
         mSignup = (Button)v.findViewById(R.id.SsignupButton);
 

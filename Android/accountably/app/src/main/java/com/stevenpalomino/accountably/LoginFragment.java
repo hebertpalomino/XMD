@@ -38,7 +38,7 @@ public class LoginFragment extends Fragment {
 
         prefs = getActivity().getSharedPreferences("com.stevenpalomino.accountably", Context.MODE_PRIVATE);
         mLoginButton = (Button)v.findViewById(R.id.loginButton);
-        mUsername = (EditText)v.findViewById(R.id.expenseName);
+        mUsername = (EditText)v.findViewById(R.id.updateName);
         mPassword = (EditText)v.findViewById(R.id.passwordField);
 
         mLoginButton.setOnClickListener(new View.OnClickListener() {

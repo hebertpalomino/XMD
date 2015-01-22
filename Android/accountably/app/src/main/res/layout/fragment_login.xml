@@ -26,7 +26,7 @@
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="50dp"
-        android:id="@+id/expenseName"
+        android:id="@+id/updateName"
         android:layout_below="@+id/textView3"
         android:layout_marginTop="70dp"
         android:layout_alignParentRight="true"
@@ -47,7 +47,7 @@
         android:textSize="30dp"
         android:hint="Password"
         android:gravity="center"
-        android:layout_below="@+id/expenseName"
+        android:layout_below="@+id/updateName"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp" />
 

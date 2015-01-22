@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,7 +14,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -29,8 +32,9 @@ public class MembersFragment extends ListFragment {
 
     public ListView expensesListview;
     public TextView totalExp;
-    static List<String>titlesList = new ArrayList<String>();
-    static List<String>amountsList = new ArrayList<String>();
+    //static List<String>titlesList = new ArrayList<String>();
+   //static List<String>amountsList = new ArrayList<String>();
+    public List<Expense>objects = new ArrayList<Expense>();
     public mySimpleAdapter adapter;
     public MembersFragment() {
         // Required empty public constructor
@@ -54,10 +58,10 @@ public class MembersFragment extends ListFragment {
 
                 removeItem(j);
 
-                return false;
+                return true;
             }
         });
-        adapter = new mySimpleAdapter(getActivity(), titlesList, amountsList);
+        adapter = new mySimpleAdapter(getActivity(), objects);
         expensesListview.setAdapter(adapter);
         setListAdapter(adapter);
 
@@ -76,17 +80,18 @@ public class MembersFragment extends ListFragment {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //delete from Parse
-                        ParseQuery<ParseObject> query = ParseQuery.getQuery("expense");
+                        ParseQuery<ParseObject> query = ParseQuery.getQuery("Expense");
                         query.whereEqualTo("user", ParseUser.getCurrentUser());
                         query.findInBackground(new FindCallback<ParseObject>() {
                             public void done(List<ParseObject> scoreList, ParseException e) {
                                 if (e == null) {
                                     for (int i = 0; i < scoreList.size(); i++){
-                                        if (scoreList.get(i).getString("expenseName").equals(titlesList.get(delPos))){
+                                        if (scoreList.get(i).getString("expenseName").equals(objects.get(delPos).mName)){
                                             scoreList.get(i).deleteInBackground();
-                                            getData();
+                                            break;
                                         }
                                     }
+                                    getData();
                                 } else {
 
                                 }
@@ -110,49 +115,69 @@ public class MembersFragment extends ListFragment {
         getData();
     }
 
-    public void getData(){
-        if (ParseUser.getCurrentUser() != null){
-            ParseQuery<ParseObject> query = ParseQuery.getQuery("expense");
-            query.whereEqualTo("user", ParseUser.getCurrentUser());
-            query.findInBackground(new FindCallback<ParseObject>() {
-                @Override
-                public void done(List<ParseObject> parseObjects, ParseException e) {
-                    if (e == null){
-                        Log.d("tag", "Objects: " + parseObjects);
-                        Float totalAmount = 0.0f;
-                        titlesList.clear();
-                        amountsList.clear();
-                        for (int i = 0; i < parseObjects.size(); i++ ){
-                            Number amount = parseObjects.get(i).getNumber("expenseAmount");
-                            String title = parseObjects.get(i).getString("expenseName");
-                            titlesList.add(title);
-                            amountsList.add(amount.toString());
-                            totalAmount += amount.floatValue();
-                            Log.d("TAG", "title: " + title);
+    public void getData() {
+        Connectivity conn = new Connectivity();
+        if (conn.isOnline(getActivity())){
+            if (ParseUser.getCurrentUser() != null) {
+                ParseQuery<ParseObject> query = ParseQuery.getQuery("Expense");
+                query.whereEqualTo("user", ParseUser.getCurrentUser());
+                query.findInBackground(new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> parseObjects, ParseException e) {
+                        if (e == null) {
+                            Log.d("tag", "Objects: " + parseObjects);
+                            Float totalAmount = 0.0f;
+                            //titlesList.clear();
+                            //amountsList.clear();
+                            objects.clear();
+                            for (int i = 0; i < parseObjects.size(); i++) {
+                                Expense exp = new Expense();
+                                Number amount = parseObjects.get(i).getNumber("expenseAmount");
+                                String title = parseObjects.get(i).getString("expenseName");
+                                exp.mName = parseObjects.get(i).getString("expenseName");
+                                exp.mAmount = parseObjects.get(i).getNumber("expenseAmount");
+                                exp.mPriority = parseObjects.get(i).getNumber("expensePriority");
+                                exp.objectID = parseObjects.get(i).getObjectId();
+
+                                objects.add(exp);
+                                //titlesList.add(title);
+                                //amountsList.add(amount.toString());
+                                totalAmount += amount.floatValue();
+                                Log.d("TAG", "OBJECTID: " + parseObjects.get(i).getObjectId());
+                            }
+                            totalExp.setText(String.format("$%.2f", totalAmount));
+                            Log.d("TAG", "Amount: " + totalAmount);
+                            adapter.notifyDataSetChanged();
+                        } else {
+                            e.printStackTrace();
                         }
-                        totalExp.setText(String.format("$%.2f", totalAmount));
-                        Log.d("TAG", "Amount: " + totalAmount);
-                        adapter.notifyDataSetChanged();
-                    }else{
-                        e.printStackTrace();
                     }
-                }
-            });
+                });
+            }
+        }else{
+            Toast.makeText(getActivity(), "No network connection detected.", Toast.LENGTH_LONG).show();
+
         }
     }
 
 
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        Intent intent = new Intent(getActivity(), UpdateActivity.class);
+        intent.putExtra("currentObject", objects.get(position));
+        startActivity(intent);
+        Log.d("TAG", "Clicked ID: " + objects.get(position).objectID);
+    }
 
-    public class mySimpleAdapter extends ArrayAdapter<String> {
+    public class mySimpleAdapter extends ArrayAdapter<Expense> {
         private final Context context;
-        private final List<String> values;
-        private final List<String> amounts;
+        private final List<Expense> objs;
 
-        public mySimpleAdapter(Context context, List<String> values, List<String> amounts) {
-            super(context, R.layout.row_layout, values);
+        public mySimpleAdapter(Context context,  List<Expense> objs) {
+            super(context, R.layout.row_layout, objs);
             this.context = context;
-            this.amounts = amounts;
-            this.values = values;
+            this.objs = objs;
         }
 
         @Override
@@ -162,12 +187,30 @@ public class MembersFragment extends ListFragment {
             View rowView = inflater.inflate(R.layout.row_layout, parent, false);
             TextView title = (TextView) rowView.findViewById(R.id.expTitle);
             TextView amount = (TextView) rowView.findViewById(R.id.expAmount);
-            title.setText(values.get(position));
-            amount.setText(amounts.get(position));
+            TextView priorityText = (TextView) rowView.findViewById(R.id.priorityText);
+            Spinner priority = (Spinner) rowView.findViewById(R.id.prioritySpinner);
+            title.setText(objs.get(position).mName);
+            amount.setText(String.format("$%.2f",objs.get(position).mAmount.floatValue()));
+            priorityText.setText(getPriority(objs.get(position).mPriority));
+            //priority.setSelection(objs.get(position).mPriority.intValue());
 
 
 
             return rowView;
+        }
+
+        public String getPriority (Number priority){
+            String mPrio = "Priority: ";
+            if (priority == 1){
+                mPrio += "Low";
+            }else if (priority == 2){
+                mPrio += "Medium";
+            }else if (priority == 3){
+                mPrio += "High";
+            }else{
+                mPrio += "Unknown";
+            }
+            return mPrio;
         }
     }
 
