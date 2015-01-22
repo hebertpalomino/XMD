@@ -74,7 +74,7 @@ public class MembersFragment extends ListFragment {
                 });
             }
         };
-        timer.schedule(runTask, 5000, 5000); //execute every 20 seconds
+        timer.schedule(runTask, 5000, 20000); //execute every 20 seconds
 
         expensesListview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override

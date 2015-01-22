@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <string-array name="spinnerPriorityArray">
+            <item>- Select a Priority -</item>
+            <item>1 - Low Priority</item>
+            <item>2 - Medium Priority</item>
+            <item>3 - High Priority</item>
+        </string-array>
+</resources>
