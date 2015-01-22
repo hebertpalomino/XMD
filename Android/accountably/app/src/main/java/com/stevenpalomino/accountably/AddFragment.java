@@ -15,8 +15,6 @@ import android.widget.Toast;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
-import java.text.NumberFormat;
-
 
 public class AddFragment extends Fragment {
 
@@ -54,8 +52,8 @@ public class AddFragment extends Fragment {
                                 ParseUser user = ParseUser.getCurrentUser();
                                 ParseObject expense = new ParseObject("Expense");
                                 expense.put("expenseName", expenseName.getText().toString());
-                                String amount = NumberFormat.getCurrencyInstance().format(Float.parseFloat(expenseAmount.getText().toString()));
-                                Log.d("tag", "Number: " + amount);
+                                //String amount = NumberFormat.getCurrencyInstance().format(Float.parseFloat(expenseAmount.getText().toString()));
+                                //Log.d("tag", "Number: " + amount);
                                 expense.put("expenseAmount", Float.valueOf(String.format("%.2f", mAmount)));
                                 expense.put("expensePriority", getNumberForPriority(spinner.getSelectedItem().toString()));
                                 expense.put("user", user);

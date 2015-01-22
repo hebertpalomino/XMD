@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -73,7 +74,7 @@ public class MembersFragment extends ListFragment {
                 });
             }
         };
-        timer.schedule(runTask, 5000, 20000); //execute in every 20 seconds
+        timer.schedule(runTask, 5000, 5000); //execute every 20 seconds
 
         expensesListview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -203,14 +204,13 @@ public class MembersFragment extends ListFragment {
                             }
 
                             Boolean isEqual = checkForEquality(objects, tempObjects);
-                            if (isEqual){
+                            if (!isEqual){
                                 Log.d("tag", "IT'S EQUAL!!");
                                 totalExp.setText(String.format("$%.2f", tempTotalFinal));
-                                adapter = new mySimpleAdapter(getActivity(), objects);
+                                adapter = new mySimpleAdapter(getActivity(), tempObjects);
                                 expensesListview.setAdapter(adapter);
                                 setListAdapter(adapter);
                                 adapter.notifyDataSetChanged();
-
                             }
                             //totalExp.setText(String.format("$%.2f", totalAmount));
 
@@ -228,6 +228,9 @@ public class MembersFragment extends ListFragment {
     }
 
     public Boolean checkForEquality(List<Expense> a, List<Expense> b){
+        if (a.size() != b.size()){
+            return false;
+        }
         for (int i = 0; i < a.size(); i++){
             if (a.get(i).mName.equals(b.get(i).mName)){
                 if (a.get(i).mAmount.equals(b.get(i).mAmount)){
@@ -299,6 +302,20 @@ public class MembersFragment extends ListFragment {
     }
 
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_rotate){
+
+            getData();
+            return true;
+        }
 
 
+        return super.onOptionsItemSelected(item);
+
+
+
+    }
 }

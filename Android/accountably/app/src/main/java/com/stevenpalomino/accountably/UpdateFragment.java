@@ -69,7 +69,7 @@ public class UpdateFragment extends Fragment {
                                             expense.put("expensePriority", getNumberForPriority(spinner.getSelectedItem().toString()));
                                             expense.put("user", user);
                                             expense.saveInBackground();
-                                            Toast.makeText(getActivity(), "Expense added successfully", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(getActivity(), "Expense updated successfully", Toast.LENGTH_SHORT).show();
                                             getActivity().finish();
                                         }
                                     }
@@ -79,6 +79,8 @@ public class UpdateFragment extends Fragment {
                             }
                         }
                     }
+                }else{
+                    Toast.makeText(getActivity(), "No network connection detected.", Toast.LENGTH_LONG).show();
                 }
             }
         });

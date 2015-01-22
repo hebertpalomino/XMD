@@ -12,4 +12,9 @@
         android:icon="@android:drawable/ic_menu_add"
         app:showAsAction="ifRoom"/>
 
+    <item android:id="@+id/action_rotate"
+        android:title="Add"
+        android:icon="@android:drawable/ic_menu_rotate"
+        app:showAsAction="ifRoom"/>
+
 </menu>
