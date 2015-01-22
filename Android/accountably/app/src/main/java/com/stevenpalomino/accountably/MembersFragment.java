@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,16 +26,20 @@ import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class MembersFragment extends ListFragment {
 
     public ListView expensesListview;
     public TextView totalExp;
-    //static List<String>titlesList = new ArrayList<String>();
-   //static List<String>amountsList = new ArrayList<String>();
     public List<Expense>objects = new ArrayList<Expense>();
+    public List<Expense>tempObjects = new ArrayList<Expense>();
     public mySimpleAdapter adapter;
+    final Handler handler = new Handler();
+    public Float tempTotalFinal;
+
     public MembersFragment() {
         // Required empty public constructor
     }
@@ -50,6 +54,26 @@ public class MembersFragment extends ListFragment {
         expensesListview = (ListView)v.findViewById(android.R.id.list);
 
         getData();
+
+
+
+        Timer timer = new Timer();
+        TimerTask runTask = new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    public void run() {
+                        try {
+                        Log.d("tag", "HERE'S THE TASK");
+                        getDataWithoutUpdatingUI();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        };
+        timer.schedule(runTask, 5000, 20000); //execute in every 20 seconds
 
         expensesListview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -125,28 +149,20 @@ public class MembersFragment extends ListFragment {
                     @Override
                     public void done(List<ParseObject> parseObjects, ParseException e) {
                         if (e == null) {
-                            Log.d("tag", "Objects: " + parseObjects);
                             Float totalAmount = 0.0f;
-                            //titlesList.clear();
-                            //amountsList.clear();
                             objects.clear();
                             for (int i = 0; i < parseObjects.size(); i++) {
                                 Expense exp = new Expense();
                                 Number amount = parseObjects.get(i).getNumber("expenseAmount");
-                                String title = parseObjects.get(i).getString("expenseName");
                                 exp.mName = parseObjects.get(i).getString("expenseName");
                                 exp.mAmount = parseObjects.get(i).getNumber("expenseAmount");
                                 exp.mPriority = parseObjects.get(i).getNumber("expensePriority");
                                 exp.objectID = parseObjects.get(i).getObjectId();
 
                                 objects.add(exp);
-                                //titlesList.add(title);
-                                //amountsList.add(amount.toString());
                                 totalAmount += amount.floatValue();
-                                Log.d("TAG", "OBJECTID: " + parseObjects.get(i).getObjectId());
                             }
                             totalExp.setText(String.format("$%.2f", totalAmount));
-                            Log.d("TAG", "Amount: " + totalAmount);
                             adapter.notifyDataSetChanged();
                         } else {
                             e.printStackTrace();
@@ -158,6 +174,76 @@ public class MembersFragment extends ListFragment {
             Toast.makeText(getActivity(), "No network connection detected.", Toast.LENGTH_LONG).show();
 
         }
+    }
+
+
+    public void getDataWithoutUpdatingUI() {
+        Connectivity conn = new Connectivity();
+        if (conn.isOnline(getActivity())){
+            if (ParseUser.getCurrentUser() != null) {
+                ParseQuery<ParseObject> query = ParseQuery.getQuery("Expense");
+                query.whereEqualTo("user", ParseUser.getCurrentUser());
+                query.findInBackground(new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> parseObjects, ParseException e) {
+                        Log.d("tag", "Running");
+                        if (e == null) {
+                            tempTotalFinal = 0.0f;
+                            tempObjects.clear();
+                            for (int i = 0; i < parseObjects.size(); i++) {
+                                Expense exp = new Expense();
+                                Number amount = parseObjects.get(i).getNumber("expenseAmount");
+                                exp.mName = parseObjects.get(i).getString("expenseName");
+                                exp.mAmount = parseObjects.get(i).getNumber("expenseAmount");
+                                exp.mPriority = parseObjects.get(i).getNumber("expensePriority");
+                                exp.objectID = parseObjects.get(i).getObjectId();
+
+                                tempObjects.add(exp);
+                                tempTotalFinal += amount.floatValue();
+                            }
+
+                            Boolean isEqual = checkForEquality(objects, tempObjects);
+                            if (isEqual){
+                                Log.d("tag", "IT'S EQUAL!!");
+                                totalExp.setText(String.format("$%.2f", tempTotalFinal));
+                                adapter = new mySimpleAdapter(getActivity(), objects);
+                                expensesListview.setAdapter(adapter);
+                                setListAdapter(adapter);
+                                adapter.notifyDataSetChanged();
+
+                            }
+                            //totalExp.setText(String.format("$%.2f", totalAmount));
+
+                            //Boolean arraysEqual = (Arrays.equals(objects, tempObjects) ? true: false);
+                        } else {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        }else{
+            //Toast.makeText(getActivity(), "No network connection detected.", Toast.LENGTH_LONG).show();
+
+        }
+    }
+
+    public Boolean checkForEquality(List<Expense> a, List<Expense> b){
+        for (int i = 0; i < a.size(); i++){
+            if (a.get(i).mName.equals(b.get(i).mName)){
+                if (a.get(i).mAmount.equals(b.get(i).mAmount)){
+                    if (a.get(i).mPriority.equals(b.get(i).mPriority)){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            }
+        }
+        return true;
     }
 
 
@@ -188,11 +274,9 @@ public class MembersFragment extends ListFragment {
             TextView title = (TextView) rowView.findViewById(R.id.expTitle);
             TextView amount = (TextView) rowView.findViewById(R.id.expAmount);
             TextView priorityText = (TextView) rowView.findViewById(R.id.priorityText);
-            Spinner priority = (Spinner) rowView.findViewById(R.id.prioritySpinner);
             title.setText(objs.get(position).mName);
             amount.setText(String.format("$%.2f",objs.get(position).mAmount.floatValue()));
             priorityText.setText(getPriority(objs.get(position).mPriority));
-            //priority.setSelection(objs.get(position).mPriority.intValue());
 
 
 
