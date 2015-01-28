@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		255407721A788C5A008484FB /* Expense.m in Sources */ = {isa = PBXBuildFile; fileRef = 255407711A788C5A008484FB /* Expense.m */; };
+		255407751A78950F008484FB /* UpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 255407741A78950F008484FB /* UpdateViewController.m */; };
 		B03F46091A649D3700963343 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B03F46081A649D3700963343 /* main.m */; };
 		B03F460C1A649D3700963343 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B03F460B1A649D3700963343 /* AppDelegate.m */; };
 		B03F460F1A649D3700963343 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B03F460E1A649D3700963343 /* ViewController.m */; };
@@ -45,6 +47,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		255407701A788C5A008484FB /* Expense.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Expense.h; sourceTree = "<group>"; };
+		255407711A788C5A008484FB /* Expense.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Expense.m; sourceTree = "<group>"; };
+		255407731A78950F008484FB /* UpdateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateViewController.h; sourceTree = "<group>"; };
+		255407741A78950F008484FB /* UpdateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateViewController.m; sourceTree = "<group>"; };
 		B03F46031A649D3700963343 /* accountably.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = accountably.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B03F46071A649D3700963343 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B03F46081A649D3700963343 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -79,8 +85,8 @@
 		B0A1EFAB1A65E51D0081D14B /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		B0FB6EF41A673AEA00A2904A /* ExpensesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExpensesTableViewCell.h; path = ../ExpensesTableViewCell.h; sourceTree = "<group>"; };
 		B0FB6EF51A673AEA00A2904A /* ExpensesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ExpensesTableViewCell.m; path = ../ExpensesTableViewCell.m; sourceTree = "<group>"; };
-		B0FB6EF71A674CDC00A2904A /* AddExpenseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddExpenseViewController.h; sourceTree = "<group>"; };
-		B0FB6EF81A674CDC00A2904A /* AddExpenseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddExpenseViewController.m; sourceTree = "<group>"; };
+		B0FB6EF71A674CDC00A2904A /* AddExpenseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddExpenseViewController.h; path = ../AddExpenseViewController.h; sourceTree = "<group>"; };
+		B0FB6EF81A674CDC00A2904A /* AddExpenseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddExpenseViewController.m; path = ../AddExpenseViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,8 +123,6 @@
 		B03F45FA1A649D3700963343 = {
 			isa = PBXGroup;
 			children = (
-				B0FB6EF71A674CDC00A2904A /* AddExpenseViewController.h */,
-				B0FB6EF81A674CDC00A2904A /* AddExpenseViewController.m */,
 				B0A1EF921A65E49D0081D14B /* Frameworks */,
 				B03F46051A649D3700963343 /* accountably */,
 				B03F461F1A649D3700963343 /* accountablyTests */,
@@ -140,6 +144,10 @@
 			children = (
 				B03F460A1A649D3700963343 /* AppDelegate.h */,
 				B03F460B1A649D3700963343 /* AppDelegate.m */,
+				B0FB6EF71A674CDC00A2904A /* AddExpenseViewController.h */,
+				B0FB6EF81A674CDC00A2904A /* AddExpenseViewController.m */,
+				255407701A788C5A008484FB /* Expense.h */,
+				255407711A788C5A008484FB /* Expense.m */,
 				B03F460D1A649D3700963343 /* ViewController.h */,
 				B03F460E1A649D3700963343 /* ViewController.m */,
 				B03F46101A649D3700963343 /* Main.storyboard */,
@@ -154,6 +162,8 @@
 				B03F46131A649D3700963343 /* Images.xcassets */,
 				B03F46151A649D3700963343 /* LaunchScreen.xib */,
 				B03F46061A649D3700963343 /* Supporting Files */,
+				255407731A78950F008484FB /* UpdateViewController.h */,
+				255407741A78950F008484FB /* UpdateViewController.m */,
 			);
 			path = accountably;
 			sourceTree = "<group>";
@@ -309,7 +319,9 @@
 				B03F46311A64A92F00963343 /* SignUpViewController.m in Sources */,
 				B03F460F1A649D3700963343 /* ViewController.m in Sources */,
 				B03F460C1A649D3700963343 /* AppDelegate.m in Sources */,
+				255407721A788C5A008484FB /* Expense.m in Sources */,
 				B0FB6EF91A674CDC00A2904A /* AddExpenseViewController.m in Sources */,
+				255407751A78950F008484FB /* UpdateViewController.m in Sources */,
 				B03F46391A64AF1F00963343 /* ExpensesTableViewController.m in Sources */,
 				B03F46091A649D3700963343 /* main.m in Sources */,
 			);
