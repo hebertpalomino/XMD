@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Expense.h"
 
 @interface UpdateViewController : UIViewController
+
+@property (nonatomic, strong) Expense *currentExpense;
 
 @end

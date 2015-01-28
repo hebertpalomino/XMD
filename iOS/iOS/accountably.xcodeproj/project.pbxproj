@@ -146,6 +146,8 @@
 				B03F460B1A649D3700963343 /* AppDelegate.m */,
 				B0FB6EF71A674CDC00A2904A /* AddExpenseViewController.h */,
 				B0FB6EF81A674CDC00A2904A /* AddExpenseViewController.m */,
+				255407731A78950F008484FB /* UpdateViewController.h */,
+				255407741A78950F008484FB /* UpdateViewController.m */,
 				255407701A788C5A008484FB /* Expense.h */,
 				255407711A788C5A008484FB /* Expense.m */,
 				B03F460D1A649D3700963343 /* ViewController.h */,
@@ -162,8 +164,6 @@
 				B03F46131A649D3700963343 /* Images.xcassets */,
 				B03F46151A649D3700963343 /* LaunchScreen.xib */,
 				B03F46061A649D3700963343 /* Supporting Files */,
-				255407731A78950F008484FB /* UpdateViewController.h */,
-				255407741A78950F008484FB /* UpdateViewController.m */,
 			);
 			path = accountably;
 			sourceTree = "<group>";

@@ -16,6 +16,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //self.currentExpense = [[Expense alloc]init];
+    NSLog(@"NAME: %@", self.currentExpense.name);
+    
     // Do any additional setup after loading the view.
 }
 

@@ -11,6 +11,7 @@
 #import "AddExpenseViewController.h"
 #import <Parse/Parse.h>
 #import "Expense.h"
+#import "UpdateViewController.h"
 
 @interface ExpensesTableViewController ()
 @property (nonatomic, strong) NSArray *test;
@@ -34,8 +35,6 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addExpense)];
     [self getData];
     self.objects = [[NSMutableArray alloc]init];
-    self.titles = [[NSMutableArray alloc] init];
-    self.amounts = [[NSMutableArray alloc]init];
     self.myTableView.allowsMultipleSelectionDuringEditing = NO;
     
     // Pull to refresh
@@ -47,11 +46,7 @@
                   forControlEvents:UIControlEventValueChanged];
 
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -64,22 +59,11 @@
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (!error) {
                 
-                //[self.myTableView reloadData];
-               // NSString *amount = self.totalAmount.text;
-                //float famount = [amount floatValue];
-                //NSLog(@"%f", famount);
-                //float totalAmount = [self.totalAmount.text floatValue];
-                for (int i = 0; i < self.titles.count; i++){
-                    NSLog(@"%@\n", [[objects objectAtIndex:i]valueForKey:@"expenseName"]);
-                    NSLog(@"%@\n", [self.titles objectAtIndex:indexPath.row]);
+                for (int i = 0; i < self.objects.count; i++){
 
-                    if ([[[objects objectAtIndex:i]valueForKey:@"expenseName"] isEqualToString:[self.titles objectAtIndex:indexPath.row]]){
+                    if ([[[objects objectAtIndex:i]valueForKey:@"expenseName"] isEqualToString:[[self.objects objectAtIndex:indexPath.row] name]]){
                         [[objects objectAtIndex:indexPath.row]deleteInBackground];
-                        //NSLog(@"%@", [NSString stringWithFormat:@"$%.2f", totalAmount]);
-                        //totalAmount -= [[self.amounts objectAtIndex:indexPath.row]floatValue];
-                        //self.totalAmount.text = [NSString stringWithFormat:@"$%.2f", totalAmount];
-                        [self.titles removeObjectAtIndex:indexPath.row];
-                        [self.amounts removeObjectAtIndex:indexPath.row];
+                        [self.objects removeObjectAtIndex:indexPath.row];
                         [self getData];
                         [self.myTableView reloadData];
                          
@@ -104,20 +88,15 @@
         if (!error) {
             // The find succeeded.
             float totalAmount = 0.0f;
-            [self.titles removeAllObjects];
-            [self.amounts removeAllObjects];
+            [self.objects removeAllObjects];
             for (int i = 0; i < objects.count; i++ ){
                 Expense *exp = [[Expense alloc]init];
                 exp.name = [[objects objectAtIndex:i]valueForKey:@"expenseName"];
                 exp.amount = [[objects objectAtIndex:i]valueForKey:@"expenseAmount"];
                 
                 [self.objects addObject:exp];
-                //[self.titles addObject:title];
-                //[self.amounts addObject:amount];
                 totalAmount += exp.amount.floatValue;
-                NSLog(@"%@", exp.name);
             }
-            NSLog(@"\n");
             self.totalAmount.text = [NSString stringWithFormat:@"$%.2f", totalAmount];
             [self.myTableView reloadData];
         } else {
@@ -148,6 +127,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -164,20 +144,33 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     ExpensesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
-    NSLog(@"test");
 
-    NSLog(@"%@", [[self.objects objectAtIndex:indexPath.row] name]);
     cell.expenseTitle.text = [[self.objects objectAtIndex:indexPath.row] name];
-    //cell.expenseAmount.text = [NSString stringWithFormat:@"%.2f",[[[self.objects objectAtIndex:indexPath.row] amount] floatValue]];
+    cell.expenseAmount.text = [NSString stringWithFormat:@"$%.2f",[[[self.objects objectAtIndex:indexPath.row] amount] floatValue]];
 
     
     return cell;
 }
 
+#pragma mark Table view selection
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
 
 
+#pragma mark - prepareForSegue
 
-
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    
+    if ([segue.identifier isEqualToString:@"updateObject"]) {
+        NSIndexPath *path = [self.myTableView indexPathForSelectedRow];
+        Expense *currentExp = [self.objects objectAtIndex:path.row];
+        [segue.destinationViewController setCurrentExpense:currentExp];
+    }
+}
 
 
 

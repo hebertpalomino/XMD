@@ -229,6 +229,7 @@
                                         <connections>
                                             <outlet property="expenseAmount" destination="hmA-fh-FxI" id="piK-8O-IIU"/>
                                             <outlet property="expenseTitle" destination="TYb-Be-Y0O" id="D7B-xI-JF0"/>
+                                            <segue destination="ubf-RD-dZJ" kind="show" identifier="updateObject" id="HIl-o0-h5R"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -443,12 +444,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4iW-nF-TiI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="727.5" y="1477.5"/>
+            <point key="canvasLocation" x="860.5" y="2162.5"/>
         </scene>
-        <!--Add Expense View Controller-->
+        <!--Update View Controller-->
         <scene sceneID="MHY-E8-JrK">
             <objects>
-                <viewController storyboardIdentifier="addExpense" id="ubf-RD-dZJ" customClass="AddExpenseViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="updateExpense" id="ubf-RD-dZJ" customClass="UpdateViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="u1j-90-X8q"/>
                         <viewControllerLayoutGuide type="bottom" id="yZQ-Db-t1h"/>
@@ -458,7 +459,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Expense Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="A0v-lk-hdQ">
-                                <rect key="frame" x="0.0" y="135" width="375" height="50"/>
+                                <rect key="frame" x="0.0" y="175" width="375" height="50"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="s4j-Xs-kcV"/>
@@ -467,7 +468,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Amount" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kxz-mr-q7l">
-                                <rect key="frame" x="0.0" y="193" width="375" height="50"/>
+                                <rect key="frame" x="0.0" y="233" width="375" height="50"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="2Sd-qj-XPt"/>
@@ -486,12 +487,9 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <action selector="tappedAddButton:" destination="ubf-RD-dZJ" eventType="touchUpInside" id="29m-mv-LBY"/>
-                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Update Entry" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gfj-CX-qqW">
-                                <rect key="frame" x="16" y="28" width="343" height="42"/>
+                                <rect key="frame" x="16" y="84" width="343" height="42"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="L6l-2B-6P3"/>
                                 </constraints>
@@ -508,9 +506,9 @@
                             <constraint firstAttribute="trailing" secondItem="A0v-lk-hdQ" secondAttribute="trailing" id="9A8-Ci-b7H"/>
                             <constraint firstItem="yZQ-Db-t1h" firstAttribute="top" secondItem="Ol0-it-V1y" secondAttribute="bottom" constant="30" id="9gF-6I-ZTu"/>
                             <constraint firstItem="Gfj-CX-qqW" firstAttribute="leading" secondItem="1iL-ic-6Xc" secondAttribute="leadingMargin" id="DHD-qb-iYW"/>
-                            <constraint firstItem="Gfj-CX-qqW" firstAttribute="top" secondItem="u1j-90-X8q" secondAttribute="bottom" constant="8" symbolic="YES" id="LT6-eW-FjZ"/>
+                            <constraint firstItem="Gfj-CX-qqW" firstAttribute="top" secondItem="u1j-90-X8q" secondAttribute="bottom" constant="64" id="LT6-eW-FjZ"/>
                             <constraint firstItem="A0v-lk-hdQ" firstAttribute="centerX" secondItem="Gfj-CX-qqW" secondAttribute="centerX" id="eDc-tz-Ysl"/>
-                            <constraint firstItem="A0v-lk-hdQ" firstAttribute="top" secondItem="Gfj-CX-qqW" secondAttribute="bottom" constant="65" id="jVr-Q9-Dom"/>
+                            <constraint firstItem="A0v-lk-hdQ" firstAttribute="top" secondItem="Gfj-CX-qqW" secondAttribute="bottom" constant="49" id="jVr-Q9-Dom"/>
                             <constraint firstItem="Kxz-mr-q7l" firstAttribute="trailing" secondItem="Ol0-it-V1y" secondAttribute="trailing" id="pdl-CB-Ug5"/>
                             <constraint firstItem="Ol0-it-V1y" firstAttribute="leading" secondItem="1iL-ic-6Xc" secondAttribute="leading" id="xt9-hi-pXP"/>
                             <constraint firstItem="Kxz-mr-q7l" firstAttribute="leading" secondItem="A0v-lk-hdQ" secondAttribute="leading" id="yKs-TD-mlV"/>
@@ -518,14 +516,10 @@
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-                    <connections>
-                        <outlet property="expenseAmount" destination="Kxz-mr-q7l" id="ZV4-a2-hRB"/>
-                        <outlet property="expenseName" destination="A0v-lk-hdQ" id="VWd-bs-SlV"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A4v-6Y-kRg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1140.5" y="1477.5"/>
+            <point key="canvasLocation" x="798.5" y="1422.5"/>
         </scene>
     </scenes>
 </document>
