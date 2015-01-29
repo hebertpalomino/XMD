@@ -97,13 +97,19 @@
                     [self dismissViewControllerAnimated:YES completion:nil];
                 }else{
                     //priority validation
+                    UIAlertView *prio = [[UIAlertView alloc]initWithTitle:nil message:@"Must choose priority to continue" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+                    [prio show];
                 }
             }else{
                 //amount validation
+                UIAlertView *amount = [[UIAlertView alloc]initWithTitle:nil message:@"Must enter valid expense amount to continue" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+                [amount show];
             }
            
         }else{
             //name validation
+            UIAlertView *name = [[UIAlertView alloc]initWithTitle:nil message:@"Must enter expense name to continue" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+            [name show];
         }
     
     }else{

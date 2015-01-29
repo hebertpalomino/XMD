@@ -13,6 +13,7 @@
 @interface UpdateViewController ()
 @property (nonatomic, strong) NSArray *priorities;
 @property (nonatomic, assign) id currentResponder;
+@property (nonatomic, retain) NSNumber *amount;
 
 @end
 
@@ -74,28 +75,111 @@
     
     Connectivity *conn = [[Connectivity alloc]init];
     if ([conn isConnected]) {
-        PFQuery *query = [PFQuery queryWithClassName:@"Expense"];
-        //[query whereKey:@"playerName" equalTo:@"Dan Stemkoski"];
-        NSLog(@"%@", self.currentExpense.objectID);
-        [query getObjectInBackgroundWithId:self.currentExpense.objectID block:^(PFObject *object, NSError *error) {
-            if (!error) {
-                //success
-                object[@"expenseName"] = self.expenseName.text;
-                NSNumber *expenseAmount = [[NSNumber alloc]initWithFloat:self.expenseAmount.text.floatValue];
-                object[@"expenseAmount"] = expenseAmount;
-                object[@"expensePriority"] = [NSNumber numberWithLong:[self.expensePriority selectedRowInComponent:0]];
-                [object saveInBackground];
-                
-                
-            }else{
-                //failure
-            }
-        }];
+        if ([self validateName:self.expenseName.text]) {
+            
+            if ([self validateAmount:self.expenseAmount.text]) {
+                if ([self validatePriority:[self.expensePriority selectedRowInComponent:0]]) {
 
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"savedExpense"
-                                                            object:nil
-                                                          userInfo:nil];
-        [self.navigationController popViewControllerAnimated:YES];
+                    PFQuery *query = [PFQuery queryWithClassName:@"Expense"];
+                    //[query whereKey:@"playerName" equalTo:@"Dan Stemkoski"];
+                    NSLog(@"%@", self.currentExpense.objectID);
+                    [query getObjectInBackgroundWithId:self.currentExpense.objectID block:^(PFObject *object, NSError *error) {
+                        if (!error) {
+                            //success
+                            object[@"expenseName"] = self.expenseName.text;
+                            NSNumber *expenseAmount = [[NSNumber alloc]initWithFloat:self.expenseAmount.text.floatValue];
+                            object[@"expenseAmount"] = expenseAmount;
+                            object[@"expensePriority"] = [NSNumber numberWithLong:[self.expensePriority selectedRowInComponent:0]];
+                            [object saveInBackground];
+                            
+                            
+                        }else{
+                            //failure
+                        }
+                    }];//query block
+
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"savedExpense"
+                                                                        object:nil
+                                                                      userInfo:nil];
+                    [self.navigationController popViewControllerAnimated:YES];
+        
+                }else{
+                    //priority validation
+                    UIAlertView *prio = [[UIAlertView alloc]initWithTitle:nil message:@"Must choose priority to continue" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+                    [prio show];
+                }
+            }else{
+                //amount validation
+                UIAlertView *amount = [[UIAlertView alloc]initWithTitle:nil message:@"Must enter valid expense amount to continue" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+                [amount show];
+            }
+            
+        }else{
+            //name validation
+            UIAlertView *name = [[UIAlertView alloc]initWithTitle:nil message:@"Must enter expense name to continue" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+            [name show];
+        }
+    }else{
+        NSLog(@"not connected");
+        UIAlertView *notConn = [[UIAlertView alloc]initWithTitle:nil message:@"No network connection detected." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+        [notConn show];
+    }
+    
+    
+    
+    
+    
+    
+}
+
+
+-(BOOL) validateName:(NSString *)name
+{
+    if ([name isEqualToString:@""]){
+        return false;
+    }else{
+        return true;
+    }
+}
+
+-(BOOL) validateAmount:(NSString*)amount{
+    NSRange range = [amount rangeOfString:@"."];
+    float floatAmount;
+    int loc = range.location + 3;
+    if ([amount isEqualToString:@""]){
+        UIAlertView *empty = [[UIAlertView alloc]initWithTitle:nil message:@"Expense amount cannot be blank" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+        [empty show];
+        return false;
+    }
+    if (range.length != 0) {
+        if (loc != -1){
+            amount = [amount substringToIndex:loc];
+            floatAmount = amount.floatValue;
+        }
+    }else{
+        floatAmount = amount.floatValue;
+    }
+    
+    if (floatAmount > 0){
+        NSLog(@"%f", floatAmount);
+        self.amount = [NSNumber numberWithFloat:floatAmount];
+        return true;
+    }else{
+        UIAlertView *empty = [[UIAlertView alloc]initWithTitle:nil message:@"Amount must be positive" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+        [empty show];
+        return false;
+    }
+}
+
+
+-(BOOL) validatePriority:(int)position{
+    //pattern validation
+    if (position == 1 || position == 2 || position == 3){
+        return true;
+    }else{
+        UIAlertView *prio = [[UIAlertView alloc]initWithTitle:nil message:@"Must select priority" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+        [prio show];
+        return false;
     }
 }
 

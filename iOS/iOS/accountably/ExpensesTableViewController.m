@@ -27,7 +27,7 @@
     self.myTableView.delegate = self;
 
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(getData)
+                                             selector:@selector(getParseData)
                                                  name:@"savedExpense"
                                                object:nil];
     
@@ -42,7 +42,7 @@
     [self.myTableView addSubview:self.refreshControl];
     self.refreshControl.tintColor = [UIColor grayColor];
     [self.refreshControl addTarget:self
-                            action:@selector(getData)
+                            action:@selector(getParseData)
                   forControlEvents:UIControlEventValueChanged];
     
     [NSTimer scheduledTimerWithTimeInterval:20.0
