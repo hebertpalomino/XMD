@@ -13,6 +13,8 @@
 @interface AddExpenseViewController ()
 @property (nonatomic, assign) id currentResponder;
 @property (nonatomic, strong) NSArray *priorities;
+@property (nonatomic, retain) NSNumber *amount;
+
 @end
 
 @implementation AddExpenseViewController
@@ -76,24 +78,32 @@
     Connectivity *conn = [[Connectivity alloc]init];
     if ([conn isConnected]) {
         NSLog(@"connected");
-        if ((![self.expenseName.text isEqualToString:@""]) && (![self.expenseAmount.text isEqualToString:@""])) {
+        if ([self validateName:self.expenseName.text]) {
             
-            PFUser *user = [PFUser currentUser];
-            PFObject *expense = [PFObject objectWithClassName:@"Expense"];
-            expense[@"expenseName"] = self.expenseName.text;
-            NSNumber *expenseAmount = [[NSNumber alloc]initWithFloat:self.expenseAmount.text.floatValue];
-            expense[@"expenseAmount"] = expenseAmount;
-            expense[@"user"] = user;
-            expense[@"expensePriority"] = [NSNumber numberWithLong:[self.expensePriority selectedRowInComponent:0]];
-            [expense saveInBackground];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"savedExpense"
-                                                                object:nil
-                                                              userInfo:nil];
-            [self dismissViewControllerAnimated:YES completion:nil];
-            
+            if ([self validateAmount:self.expenseAmount.text]) {
+                if ([self validatePriority:[self.expensePriority selectedRowInComponent:0]]) {
+                    
+                    PFUser *user = [PFUser currentUser];
+                    PFObject *expense = [PFObject objectWithClassName:@"Expense"];
+                    expense[@"expenseName"] = self.expenseName.text;
+                    self.amount = [[NSNumber alloc]initWithFloat:self.expenseAmount.text.floatValue];
+                    expense[@"expenseAmount"] = self.amount;
+                    expense[@"user"] = user;
+                    expense[@"expensePriority"] = [NSNumber numberWithLong:[self.expensePriority selectedRowInComponent:0]];
+                    [expense saveInBackground];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"savedExpense"
+                                                                        object:nil
+                                                                      userInfo:nil];
+                    [self dismissViewControllerAnimated:YES completion:nil];
+                }else{
+                    //priority validation
+                }
+            }else{
+                //amount validation
+            }
+           
         }else{
-            UIAlertView *empty = [[UIAlertView alloc]initWithTitle:nil message:@"Expense name or amount cannot be blank" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
-            [empty show];
+            //name validation
         }
     
     }else{
@@ -105,6 +115,55 @@
     
 }
 
+-(BOOL) validateName:(NSString *)name
+{
+        if ([name isEqualToString:@""]){
+            return false;
+        }else{
+            return true;
+        }
+}
+
+-(BOOL) validateAmount:(NSString*)amount{
+    NSRange range = [amount rangeOfString:@"."];
+    float floatAmount;
+    int loc = range.location + 3;
+    if ([amount isEqualToString:@""]){
+        UIAlertView *empty = [[UIAlertView alloc]initWithTitle:nil message:@"Expense amount cannot be blank" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+        [empty show];
+        return false;
+    }
+    if (range.length != 0) {
+        if (loc != -1){
+            amount = [amount substringToIndex:loc];
+            floatAmount = amount.floatValue;
+        }
+    }else{
+        floatAmount = amount.floatValue;
+    }
+
+    if (floatAmount > 0){
+        NSLog(@"%f", floatAmount);
+        self.amount = [NSNumber numberWithFloat:floatAmount];
+        return true;
+    }else{
+        UIAlertView *empty = [[UIAlertView alloc]initWithTitle:nil message:@"Amount must be positive" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+        [empty show];
+        return false;
+    }
+}
+
+
+-(BOOL) validatePriority:(int)position{
+    //pattern validation
+    if (position == 1 || position == 2 || position == 3){
+        return true;
+    }else{
+        UIAlertView *prio = [[UIAlertView alloc]initWithTitle:nil message:@"Must select priority" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+        [prio show];
+        return false;
+    }
+}
 
 
 

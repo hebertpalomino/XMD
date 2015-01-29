@@ -54,7 +54,7 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         //add code here for when you hit delete
         //delete from Parse
-        PFQuery *query = [PFQuery queryWithClassName:@"expense"];
+        PFQuery *query = [PFQuery queryWithClassName:@"Expense"];
         [query whereKey:@"user" equalTo:[PFUser currentUser]];
         [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (!error) {
