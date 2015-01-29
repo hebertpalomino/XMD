@@ -9,8 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "Expense.h"
 
-@interface UpdateViewController : UIViewController
+@interface UpdateViewController : UIViewController<UITextFieldDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
 
 @property (nonatomic, strong) Expense *currentExpense;
+@property (weak, nonatomic) IBOutlet UITextField *expenseName;
+@property (weak, nonatomic) IBOutlet UITextField *expenseAmount;
+@property (weak, nonatomic) IBOutlet UIPickerView *expensePriority;
+- (IBAction)tappedUpdate:(UIButton *)sender;
 
 @end

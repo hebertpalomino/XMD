@@ -16,7 +16,7 @@
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *objectID;
 @property (nonatomic, strong) NSNumber *amount;
-@property (nonatomic, strong) NSNumber *priority;
+@property (nonatomic, strong) NSNumber *aPriority;
 
 
 

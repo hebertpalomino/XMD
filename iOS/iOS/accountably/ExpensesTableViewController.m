@@ -93,6 +93,9 @@
                 Expense *exp = [[Expense alloc]init];
                 exp.name = [[objects objectAtIndex:i]valueForKey:@"expenseName"];
                 exp.amount = [[objects objectAtIndex:i]valueForKey:@"expenseAmount"];
+                exp.aPriority = [[objects objectAtIndex:i]valueForKey:@"expensePriority"];
+                exp.objectID = [[objects objectAtIndex:i]valueForKey:@"objectId"];
+
                 
                 [self.objects addObject:exp];
                 totalAmount += exp.amount.floatValue;
@@ -147,10 +150,27 @@
 
     cell.expenseTitle.text = [[self.objects objectAtIndex:indexPath.row] name];
     cell.expenseAmount.text = [NSString stringWithFormat:@"$%.2f",[[[self.objects objectAtIndex:indexPath.row] amount] floatValue]];
-
+    cell.expensePriority.text = [NSString stringWithFormat:@"Priority: %@",[self getExpensePriority:[[[self.objects objectAtIndex:indexPath.row] aPriority] floatValue]]];
     
     return cell;
 }
+
+-(NSString *) getExpensePriority:(float)priority
+{
+    NSString *prio;
+    if (priority == 1){
+        prio = @"Low";
+    }else if (priority == 2){
+        prio = @"Medium";
+    }else if (priority == 3){
+        prio = @"High";
+    }else{
+        prio = @"Unknown";
+    }
+    return prio;
+}
+
+
 
 #pragma mark Table view selection
 

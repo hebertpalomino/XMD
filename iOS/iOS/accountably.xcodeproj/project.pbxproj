@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		255407721A788C5A008484FB /* Expense.m in Sources */ = {isa = PBXBuildFile; fileRef = 255407711A788C5A008484FB /* Expense.m */; };
 		255407751A78950F008484FB /* UpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 255407741A78950F008484FB /* UpdateViewController.m */; };
+		255407781A79C873008484FB /* Connectivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 255407771A79C873008484FB /* Connectivity.m */; };
+		2554077B1A79CA2A008484FB /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 2554077A1A79CA2A008484FB /* Reachability.m */; };
 		B03F46091A649D3700963343 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B03F46081A649D3700963343 /* main.m */; };
 		B03F460C1A649D3700963343 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B03F460B1A649D3700963343 /* AppDelegate.m */; };
 		B03F460F1A649D3700963343 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B03F460E1A649D3700963343 /* ViewController.m */; };
@@ -51,6 +53,10 @@
 		255407711A788C5A008484FB /* Expense.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Expense.m; sourceTree = "<group>"; };
 		255407731A78950F008484FB /* UpdateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateViewController.h; sourceTree = "<group>"; };
 		255407741A78950F008484FB /* UpdateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateViewController.m; sourceTree = "<group>"; };
+		255407761A79C873008484FB /* Connectivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Connectivity.h; sourceTree = "<group>"; };
+		255407771A79C873008484FB /* Connectivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Connectivity.m; sourceTree = "<group>"; };
+		255407791A79CA2A008484FB /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		2554077A1A79CA2A008484FB /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		B03F46031A649D3700963343 /* accountably.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = accountably.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B03F46071A649D3700963343 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B03F46081A649D3700963343 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -164,6 +170,8 @@
 				B03F46131A649D3700963343 /* Images.xcassets */,
 				B03F46151A649D3700963343 /* LaunchScreen.xib */,
 				B03F46061A649D3700963343 /* Supporting Files */,
+				255407761A79C873008484FB /* Connectivity.h */,
+				255407771A79C873008484FB /* Connectivity.m */,
 			);
 			path = accountably;
 			sourceTree = "<group>";
@@ -171,6 +179,8 @@
 		B03F46061A649D3700963343 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				255407791A79CA2A008484FB /* Reachability.h */,
+				2554077A1A79CA2A008484FB /* Reachability.m */,
 				B03F46071A649D3700963343 /* Info.plist */,
 				B03F46081A649D3700963343 /* main.m */,
 			);
@@ -319,10 +329,12 @@
 				B03F46311A64A92F00963343 /* SignUpViewController.m in Sources */,
 				B03F460F1A649D3700963343 /* ViewController.m in Sources */,
 				B03F460C1A649D3700963343 /* AppDelegate.m in Sources */,
+				255407781A79C873008484FB /* Connectivity.m in Sources */,
 				255407721A788C5A008484FB /* Expense.m in Sources */,
 				B0FB6EF91A674CDC00A2904A /* AddExpenseViewController.m in Sources */,
 				255407751A78950F008484FB /* UpdateViewController.m in Sources */,
 				B03F46391A64AF1F00963343 /* ExpensesTableViewController.m in Sources */,
+				2554077B1A79CA2A008484FB /* Reachability.m in Sources */,
 				B03F46091A649D3700963343 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

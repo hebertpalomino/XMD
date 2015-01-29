@@ -8,10 +8,11 @@
 
 #import "AddExpenseViewController.h"
 #import <Parse/Parse.h>
+#import "Connectivity.h"
 
 @interface AddExpenseViewController ()
 @property (nonatomic, assign) id currentResponder;
-
+@property (nonatomic, strong) NSArray *priorities;
 @end
 
 @implementation AddExpenseViewController
@@ -25,6 +26,10 @@
     [singleTap setNumberOfTapsRequired:1];
     [singleTap setNumberOfTouchesRequired:1];
     [self.view addGestureRecognizer:singleTap];
+    self.priorities = @[@"- Select a Priority -", @"1 - Low Priority", @"2 - Medium Priority", @"3 - High Priority"];
+    self.expensePriority.delegate = self;
+    
+    
     // Do any additional setup after loading the view.
 }
 
@@ -41,6 +46,22 @@
     self.currentResponder = textField;
 }
 
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+    return 1;
+}
+
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    return self.priorities.count;
+}
+
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    return [self.priorities objectAtIndex:row];
+}
+
+
 /*
 #pragma mark - Navigation
 
@@ -52,24 +73,46 @@
 */
 
 - (IBAction)tappedAddButton:(UIButton *)sender {
-    if ((![self.expenseName.text isEqualToString:@""]) && (![self.expenseAmount.text isEqualToString:@""])) {
-        
-        PFUser *user = [PFUser currentUser];
-        PFObject *expense = [PFObject objectWithClassName:@"expense"];
-        expense[@"expenseName"] = self.expenseName.text;
-        expense[@"expenseAmount"] = self.expenseAmount.text;
-        expense[@"user"] = user;
-        [expense saveInBackground];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"savedExpense"
-                                                            object:nil
-                                                          userInfo:nil];
-        [self dismissViewControllerAnimated:YES completion:nil];
-        
+    Connectivity *conn = [[Connectivity alloc]init];
+    if ([conn isConnected]) {
+        NSLog(@"connected");
+        if ((![self.expenseName.text isEqualToString:@""]) && (![self.expenseAmount.text isEqualToString:@""])) {
+            
+            PFUser *user = [PFUser currentUser];
+            PFObject *expense = [PFObject objectWithClassName:@"Expense"];
+            expense[@"expenseName"] = self.expenseName.text;
+            NSNumber *expenseAmount = [[NSNumber alloc]initWithFloat:self.expenseAmount.text.floatValue];
+            expense[@"expenseAmount"] = expenseAmount;
+            expense[@"user"] = user;
+            expense[@"expensePriority"] = [NSNumber numberWithLong:[self.expensePriority selectedRowInComponent:0]];
+            [expense saveInBackground];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"savedExpense"
+                                                                object:nil
+                                                              userInfo:nil];
+            [self dismissViewControllerAnimated:YES completion:nil];
+            
+        }else{
+            UIAlertView *empty = [[UIAlertView alloc]initWithTitle:nil message:@"Expense name or amount cannot be blank" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+            [empty show];
+        }
+    
     }else{
-        UIAlertView *empty = [[UIAlertView alloc]initWithTitle:nil message:@"Expense name or amount cannot be blank" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
-        [empty show];
+        NSLog(@"not connected");
+        UIAlertView *notConn = [[UIAlertView alloc]initWithTitle:nil message:@"No network connection detected." delegate:self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+        [notConn show];
     }
+    
+    
 }
+
+
+
+
+
+
+
+
+
 
 
 
