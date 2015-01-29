@@ -33,7 +33,7 @@
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"Logout" style:UIBarButtonItemStylePlain target:self action:@selector(logoutUser)];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addExpense)];
-    [self getData];
+    [self getParseData];
     self.objects = [[NSMutableArray alloc]init];
     self.myTableView.allowsMultipleSelectionDuringEditing = NO;
     
@@ -44,6 +44,12 @@
     [self.refreshControl addTarget:self
                             action:@selector(getData)
                   forControlEvents:UIControlEventValueChanged];
+    
+    [NSTimer scheduledTimerWithTimeInterval:20.0
+                                     target:self
+                                   selector:@selector(getParseData)
+                                   userInfo:nil
+                                    repeats:YES];
 
     
 
@@ -64,7 +70,7 @@
                     if ([[[objects objectAtIndex:i]valueForKey:@"expenseName"] isEqualToString:[[self.objects objectAtIndex:indexPath.row] name]]){
                         [[objects objectAtIndex:indexPath.row]deleteInBackground];
                         [self.objects removeObjectAtIndex:indexPath.row];
-                        [self getData];
+                        [self getParseData];
                         [self.myTableView reloadData];
                          
                     }
@@ -78,8 +84,9 @@
 }
 
 
--(void)getData
+-(void)getParseData
 {
+    NSLog(@"Get Data");
     [self.refreshControl endRefreshing];
     PFQuery *query = [PFQuery queryWithClassName:@"Expense"];
     [query whereKey:@"user" equalTo:[PFUser currentUser]];
